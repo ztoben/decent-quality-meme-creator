@@ -13,7 +13,17 @@ export default function GlobalStyles() {
           max-width: 100vw;
           display: flex;
           flex-direction: column;
-          justify-content: center;
+          align-items: center;
+        }
+
+        #root {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 10px 10px 0;
+          flex: 1;
+          max-width: 500px;
+          width: 100%;
         }
       `}
     />
