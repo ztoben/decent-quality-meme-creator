@@ -28,6 +28,7 @@ function onChangeSetImageTextNodes(
 
 export default function Content() {
   const [imageTextNodes, setImageTextNodes] = useState(initialTextNodes);
+  const [imageNodes, setImageNodes] = useState([]);
 
   return (
     <div css={contentStyle}>
@@ -69,7 +70,7 @@ export default function Content() {
         + Add Text
       </button>
       <p>Images:</p>
-      <FileDropZone />
+      <FileDropZone setImageNodes={setImageNodes} imageNodes={imageNodes} />
       <p>Meme:</p>
       <div
         css={{
