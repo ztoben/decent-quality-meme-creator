@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Stage, Layer, Text } from "react-konva";
 import FileDropZone from "./FileDropZone";
 
 const contentStyle = {
@@ -11,7 +12,7 @@ const emptyTextNode = {
   text: "",
   options: {},
 };
-const initialTextNodes = [{ ...emptyTextNode }, { ...emptyTextNode }];
+const initialTextNodes = [{ ...emptyTextNode, text: "Your text goes here" }];
 
 function onChangeSetImageTextNodes(
   setImageTextNodes,
@@ -83,7 +84,13 @@ export default function Content() {
           alignItems: "center",
         }}
       >
-        <p>Meme will go here...</p>
+        <Stage width={500} height={500}>
+          {imageTextNodes.map((imageTextNode, index) => (
+            <Layer key={`text-${index}`}>
+              <Text text={imageTextNode.text} y={index * 20} draggable />
+            </Layer>
+          ))}
+        </Stage>
       </div>
     </div>
   );
