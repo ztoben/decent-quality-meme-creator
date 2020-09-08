@@ -1,5 +1,7 @@
 import React, { useCallback, useMemo } from "react";
 import { useDropzone } from "react-dropzone";
+import { generateID } from "../helpers";
+import ImageNodesList from "./ImageNodesList";
 
 const baseStyle = {
   padding: "20px",
@@ -23,44 +25,27 @@ const acceptStyle = {
 const rejectStyle = {
   borderColor: "#ff1744",
 };
-const imageNodeInfoContainerStyle = {
-  display: "inline-flex",
-  marginTop: 10,
-};
-const imageNodeTextStyle = {
-  borderWidth: 2,
-  borderRadius: 2,
-  borderColor: "#eeeeee",
-  borderStyle: "solid",
-  backgroundColor: "#fafafa",
-  color: "green",
-  padding: 5,
-  margin: 0,
-  flex: 1,
-};
 
 export default function FileDropZone({ imageNodes, setImageNodes }) {
   const onDrop = useCallback(
     (acceptedFiles) => {
       const newImageNodes = [];
-
       acceptedFiles.forEach((file) => {
         const reader = new FileReader();
 
         reader.onabort = () => console.log("file reading was aborted");
         reader.onerror = () => console.log("file reading has failed");
         reader.onload = () => {
-          console.log(file);
-
           newImageNodes.push({
             name: file.name,
-            content: reader.result,
+            src: reader.result,
+            id: generateID(),
           });
         };
         reader.onloadend = () => {
           setImageNodes([...imageNodes, ...newImageNodes]);
         };
-        reader.readAsArrayBuffer(file);
+        reader.readAsDataURL(file);
       });
     },
     [imageNodes, setImageNodes]
@@ -97,24 +82,7 @@ export default function FileDropZone({ imageNodes, setImageNodes }) {
           <p>Drag 'n' drop some files here, or click to select files</p>
         )}
       </div>
-      {imageNodes.map((imageNode, index) => (
-        <div
-          key={`${imageNode.name}-${index}`}
-          css={imageNodeInfoContainerStyle}
-        >
-          <p css={imageNodeTextStyle}>{imageNode.name}</p>
-          <button
-            onClick={() => {
-              const newImageNodes = [...imageNodes];
-              newImageNodes.splice(index, 1);
-
-              setImageNodes(newImageNodes);
-            }}
-          >
-            Delete
-          </button>
-        </div>
-      ))}
+      <ImageNodesList imageNodes={imageNodes} setImageNodes={setImageNodes} />
     </>
   );
 }
