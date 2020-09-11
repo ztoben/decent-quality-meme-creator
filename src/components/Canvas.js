@@ -1,10 +1,18 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Layer, Stage, Text } from "react-konva";
 import BaseImage from "./BaseImage";
 import { handleSaveImage } from "../helpers";
 
-export default function Canvas({ imageNodes, imageTextNodes }) {
+export default function Canvas({ imageNodes, setImageNodes, imageTextNodes }) {
+  const [selectedId, selectShape] = useState(null);
   const stageRef = useRef();
+
+  const checkDeselect = (e) => {
+    const clickedOnEmpty = e.target === e.target.getStage();
+    if (clickedOnEmpty) {
+      selectShape(null);
+    }
+  };
 
   return (
     <>
@@ -19,13 +27,30 @@ export default function Canvas({ imageNodes, imageTextNodes }) {
           alignItems: "center",
         }}
       >
-        <Stage ref={stageRef} width={500} height={500}>
+        <Stage
+          ref={stageRef}
+          width={500}
+          height={500}
+          onMouseDown={checkDeselect}
+          onTouchStart={checkDeselect}
+        >
           {imageNodes.map((imageNode, index) => {
-            console.log(imageNode.name);
-
             return (
               <Layer key={`image-${index}`}>
-                <BaseImage draggable={true} src={imageNode.src} />
+                <BaseImage
+                  imageProps={imageNode}
+                  draggable={true}
+                  src={imageNode.src}
+                  isSelected={imageNode.id === selectedId}
+                  onSelect={() => {
+                    selectShape(imageNode.id);
+                  }}
+                  onChange={(newAttrs) => {
+                    const newImageNodes = imageNodes.slice();
+                    newImageNodes[index] = newAttrs;
+                    setImageNodes(newImageNodes);
+                  }}
+                />
               </Layer>
             );
           })}

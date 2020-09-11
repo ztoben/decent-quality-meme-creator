@@ -6,6 +6,7 @@ const footerStyle = css`
     a {
       color: blue;
       text-decoration: none;
+      margin-top: 10px;
     }
 
     a:link,

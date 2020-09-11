@@ -19,7 +19,11 @@ export default function Content() {
       <p>Images:</p>
       <FileDropZone setImageNodes={setImageNodes} imageNodes={imageNodes} />
       <p>Meme:</p>
-      <Canvas imageTextNodes={imageTextNodes} imageNodes={imageNodes} />
+      <Canvas
+        imageTextNodes={imageTextNodes}
+        imageNodes={imageNodes}
+        setImageNodes={setImageNodes}
+      />
     </div>
   );
 }
