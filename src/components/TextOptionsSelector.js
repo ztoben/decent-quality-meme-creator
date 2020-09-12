@@ -85,7 +85,6 @@ export default function TextOptionsSelector({
           onClick={() => toggleTextOption(...boldOption)}
           selected={isSelected(...boldOption)}
         >
-          {/*TODO: need to propagate through the click to the button*/}
           <FaBold />
         </IconButton>
         <IconButton

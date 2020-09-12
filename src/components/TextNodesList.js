@@ -2,6 +2,7 @@ import React from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { createEmptyTextNode, onDragEnd } from "../helpers";
 import TextOptionsSelector from "./TextOptionsSelector";
+import DragHandle from "./DragHandle";
 
 function onChangeSetTextNodes(setTextNodes, textNodes, value, index) {
   const newTextNodes = [...textNodes];
@@ -51,17 +52,7 @@ export default function TextNodesList({ textNodes, setTextNodes }) {
                           snapshot.isDragging
                         )}
                       >
-                        <div
-                          css={{
-                            width: 40,
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
-                        >
-                          <span>≡</span>
-                        </div>
+                        <DragHandle />
                         <div
                           css={{
                             display: "flex",
@@ -70,7 +61,7 @@ export default function TextNodesList({ textNodes, setTextNodes }) {
                           }}
                         >
                           <input
-                            css={{ flexGrow: 1, padding: 5 }}
+                            css={{ flexGrow: 1, padding: 5, fontSize: 14 }}
                             type="text"
                             value={textNode?.text}
                             onChange={(event) =>

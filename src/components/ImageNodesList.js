@@ -2,12 +2,14 @@ import React from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { onDragEnd } from "../helpers";
+import DragHandle from "./DragHandle";
 
 const imageNodeInfoContainerStyle = {
   display: "flex",
   marginTop: 10,
 };
 const imageNodeTextStyle = {
+  fontSize: 14,
   borderWidth: 2,
   borderRadius: 2,
   borderColor: "#eeeeee",
@@ -54,20 +56,10 @@ export default function ImageNodesList({ imageNodes, setImageNodes }) {
                         snapshot.isDragging
                       )}
                     >
-                      <div
-                        css={{
-                          width: 40,
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <span>≡</span>
-                      </div>
+                      <DragHandle />
                       <p css={imageNodeTextStyle}>{imageNode.name}</p>
                       <button
-                        type="button"
+                        css={{ cursor: "pointer" }}
                         onClick={() => {
                           const newImageNodes = [...imageNodes];
                           newImageNodes.splice(index, 1);
