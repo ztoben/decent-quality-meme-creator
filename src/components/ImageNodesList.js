@@ -1,4 +1,5 @@
 import React from "react";
+import { FaTrashAlt } from "react-icons/fa";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { onDragEnd } from "../helpers";
 
@@ -74,7 +75,7 @@ export default function ImageNodesList({ imageNodes, setImageNodes }) {
                           setImageNodes(newImageNodes);
                         }}
                       >
-                        Delete
+                        <FaTrashAlt />
                       </button>
                     </div>
                     {provided.placeholder}

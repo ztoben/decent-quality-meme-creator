@@ -3,7 +3,7 @@ import { Layer, Stage, Text } from "react-konva";
 import BaseImage from "./BaseImage";
 import { handleSaveImage } from "../helpers";
 
-export default function Canvas({ imageNodes, setImageNodes, imageTextNodes }) {
+export default function Canvas({ imageNodes, setImageNodes, textNodes }) {
   const [selectedId, selectShape] = useState(null);
   const stageRef = useRef();
 
@@ -54,9 +54,9 @@ export default function Canvas({ imageNodes, setImageNodes, imageTextNodes }) {
               </Layer>
             );
           })}
-          {imageTextNodes.map((imageTextNode, index) => (
+          {textNodes.map((textNode, index) => (
             <Layer key={`text-${index}`}>
-              <Text text={imageTextNode.text} y={index * 20} draggable />
+              <Text {...textNode} y={index * 20} draggable />
             </Layer>
           ))}
         </Stage>

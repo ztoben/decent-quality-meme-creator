@@ -10,8 +10,12 @@ export function generateID() {
 export function createEmptyTextNode() {
   return {
     text: "",
-    options: {},
     id: generateID(),
+    fontFamily: "Arial",
+    fontSize: 12,
+    fontStyle: "normal",
+    textDecoration: "",
+    fill: "black",
   };
 }
 

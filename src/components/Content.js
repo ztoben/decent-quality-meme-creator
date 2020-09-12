@@ -6,21 +6,18 @@ import { contentStyle } from "../styles";
 import Canvas from "./Canvas";
 
 export default function Content() {
-  const [imageTextNodes, setImageTextNodes] = useState(getInitialTextNodes);
+  const [textNodes, setTextNodes] = useState(getInitialTextNodes);
   const [imageNodes, setImageNodes] = useState([]);
 
   return (
     <div css={contentStyle}>
       <p>Text:</p>
-      <TextNodesList
-        imageTextNodes={imageTextNodes}
-        setImageTextNodes={setImageTextNodes}
-      />
+      <TextNodesList textNodes={textNodes} setTextNodes={setTextNodes} />
       <p>Images:</p>
       <FileDropZone setImageNodes={setImageNodes} imageNodes={imageNodes} />
       <p>Meme:</p>
       <Canvas
-        imageTextNodes={imageTextNodes}
+        textNodes={textNodes}
         imageNodes={imageNodes}
         setImageNodes={setImageNodes}
       />

@@ -75,8 +75,6 @@ export default function BaseImage({
           const width = Math.max(5, node.width() * scaleX);
           const height = Math.max(node.height() * scaleY);
 
-          console.log({ width, height });
-
           onChange({
             ...imageProps,
             x: node.x(),

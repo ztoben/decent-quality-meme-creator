@@ -1,24 +1,21 @@
 import React from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { createEmptyTextNode, onDragEnd } from "../helpers";
+import TextOptionsSelector from "./TextOptionsSelector";
 
-function onChangeSetImageTextNodes(
-  setImageTextNodes,
-  imageTextNodes,
-  value,
-  index
-) {
-  const newImageTextNodes = [...imageTextNodes];
+function onChangeSetTextNodes(setTextNodes, textNodes, value, index) {
+  const newTextNodes = [...textNodes];
 
-  newImageTextNodes[index].text = value;
+  newTextNodes[index].text = value;
 
-  setImageTextNodes(newImageTextNodes);
+  setTextNodes(newTextNodes);
 }
 
 const grid = 8;
 
 const getItemStyle = (draggableStyle, isDragging) => ({
   display: "flex",
+  flexDirection: "row",
   userSelect: "none",
   margin: `0 0 ${grid}px 0`,
   backgroundColor: "lightgray",
@@ -28,21 +25,19 @@ const getItemStyle = (draggableStyle, isDragging) => ({
   ...draggableStyle,
 });
 
-export default function TextNodesList({ imageTextNodes, setImageTextNodes }) {
+export default function TextNodesList({ textNodes, setTextNodes }) {
   return (
     <>
       <DragDropContext
-        onDragEnd={(result) =>
-          onDragEnd(result, imageTextNodes, setImageTextNodes)
-        }
+        onDragEnd={(result) => onDragEnd(result, textNodes, setTextNodes)}
       >
         <Droppable droppableId="droppable-image-text-nodes">
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
-              {imageTextNodes.map((imageTextNode, index) => (
+              {textNodes.map((textNode, index) => (
                 <Draggable
-                  key={imageTextNode.id}
-                  draggableId={imageTextNode.id}
+                  key={textNode.id}
+                  draggableId={textNode.id}
                   index={index}
                 >
                   {(provided, snapshot) => (
@@ -67,30 +62,32 @@ export default function TextNodesList({ imageTextNodes, setImageTextNodes }) {
                         >
                           <span>≡</span>
                         </div>
-                        <input
-                          css={{ flexGrow: 1, padding: 5 }}
-                          type="text"
-                          value={imageTextNode?.text}
-                          onChange={(event) =>
-                            onChangeSetImageTextNodes(
-                              setImageTextNodes,
-                              imageTextNodes,
-                              event.target.value,
-                              index
-                            )
-                          }
-                        />
-                        <button
-                          type="button"
-                          onClick={() => {
-                            const newTextNodes = [...imageTextNodes];
-                            newTextNodes.splice(index, 1);
-
-                            setImageTextNodes(newTextNodes);
+                        <div
+                          css={{
+                            display: "flex",
+                            flexDirection: "column",
+                            flex: 1,
                           }}
                         >
-                          Delete
-                        </button>
+                          <input
+                            css={{ flexGrow: 1, padding: 5 }}
+                            type="text"
+                            value={textNode?.text}
+                            onChange={(event) =>
+                              onChangeSetTextNodes(
+                                setTextNodes,
+                                textNodes,
+                                event.target.value,
+                                index
+                              )
+                            }
+                          />
+                          <TextOptionsSelector
+                            index={index}
+                            textNodes={textNodes}
+                            setTextNodes={setTextNodes}
+                          />
+                        </div>
                       </div>
                       {provided.placeholder}
                     </div>
@@ -105,7 +102,7 @@ export default function TextNodesList({ imageTextNodes, setImageTextNodes }) {
       <button
         type="button"
         onClick={() =>
-          setImageTextNodes([...imageTextNodes, { ...createEmptyTextNode() }])
+          setTextNodes([...textNodes, { ...createEmptyTextNode() }])
         }
       >
         + Add Text
