@@ -7,6 +7,7 @@ import {
   FaLink,
   FaTrashAlt,
 } from "react-icons/fa";
+import IconButton from "./IconButton";
 
 const boldOption = ["fontStyle", "bold"];
 const italicOption = ["fontStyle", "italic"];
@@ -24,35 +25,19 @@ const containerStyle = {
     display: "inline-flex",
   },
 };
-const buttonStyle = {
-  display: "flex",
-  padding: 5,
-  justifyContent: "center",
-  margin: 2,
-  borderRadius: 0,
-  boxShadow: "none",
-  cursor: "pointer",
-};
 
-const IconButton = ({ children, onClick, selected }) => (
-  <button
-    css={{
-      ...buttonStyle,
-      ...(selected && {
-        backgroundColor: "gray",
-      }),
-    }}
-    onClick={onClick}
-  >
-    {children}
-  </button>
-);
-
-export default function TextOptionsSelector({
+export default function TextNodeOptionsSelector({
   index,
   textNodes,
   setTextNodes,
 }) {
+  const toggleDraggable = () => {
+    const newTextNodes = [...textNodes];
+
+    newTextNodes[index].draggable = !newTextNodes[index].draggable;
+    setTextNodes(newTextNodes);
+  };
+
   const toggleTextOption = (option, value) => {
     const newTextNodes = [...textNodes];
     const options = newTextNodes[index][option].split(" ");
@@ -77,7 +62,10 @@ export default function TextOptionsSelector({
 
   return (
     <div css={containerStyle}>
-      <IconButton>
+      <IconButton
+        onClick={toggleDraggable}
+        selected={!textNodes[index].draggable}
+      >
         <FaLink />
       </IconButton>
       <div>

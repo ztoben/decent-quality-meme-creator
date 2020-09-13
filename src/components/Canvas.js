@@ -3,8 +3,21 @@ import { Layer, Stage, Text } from "react-konva";
 import BaseImage from "./BaseImage";
 import { handleSaveImage } from "../helpers";
 
-export default function Canvas({ imageNodes, setImageNodes, textNodes }) {
+const heightWidthContainerStyle = {
+  display: "flex",
+  justifyContent: "space-around",
+  marginBottom: 5,
+};
+
+export default function Canvas({
+  imageNodes,
+  setImageNodes,
+  textNodes,
+  fontOptions,
+}) {
   const [selectedId, selectShape] = useState(null);
+  const [width, setWidth] = useState(500);
+  const [height, setHeight] = useState(500);
   const stageRef = useRef();
 
   const checkDeselect = (e) => {
@@ -16,21 +29,41 @@ export default function Canvas({ imageNodes, setImageNodes, textNodes }) {
 
   return (
     <>
+      <div css={heightWidthContainerStyle}>
+        <div>
+          <span>Height:</span>
+          <input
+            type="text"
+            value={height}
+            onFocus={(e) => e.target.select()}
+            onChange={(e) => setHeight(e.target.value.replace(/\D/, ""))}
+          />
+        </div>
+        <div>
+          <span>Width:</span>
+          <input
+            type="text"
+            value={width}
+            onFocus={(e) => e.target.select()}
+            onChange={(e) => setWidth(e.target.value.replace(/\D/, ""))}
+          />
+        </div>
+      </div>
       <div
         css={{
           position: "relative",
-          width: "100%",
-          minHeight: 500,
           border: "1px solid black",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          width,
+          height,
         }}
       >
         <Stage
           ref={stageRef}
-          width={500}
-          height={500}
+          width={width}
+          height={height}
           onMouseDown={checkDeselect}
           onTouchStart={checkDeselect}
         >
@@ -56,7 +89,12 @@ export default function Canvas({ imageNodes, setImageNodes, textNodes }) {
           })}
           {textNodes.map((textNode, index) => (
             <Layer key={`text-${index}`}>
-              <Text {...textNode} y={index * 20} draggable />
+              <Text
+                {...textNode}
+                {...fontOptions}
+                y={index * 20}
+                width={width}
+              />
             </Layer>
           ))}
         </Stage>

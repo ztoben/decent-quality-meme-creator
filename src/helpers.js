@@ -11,11 +11,9 @@ export function createEmptyTextNode() {
   return {
     text: "",
     id: generateID(),
-    fontFamily: "Arial",
-    fontSize: 12,
     fontStyle: "normal",
     textDecoration: "",
-    fill: "black",
+    draggable: true,
   };
 }
 

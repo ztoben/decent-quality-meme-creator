@@ -1,7 +1,7 @@
 import React from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { createEmptyTextNode, onDragEnd } from "../helpers";
-import TextOptionsSelector from "./TextOptionsSelector";
+import TextNodeOptionsSelector from "./TextNodeOptionsSelector";
 import DragHandle from "./DragHandle";
 
 function onChangeSetTextNodes(setTextNodes, textNodes, value, index) {
@@ -73,7 +73,7 @@ export default function TextNodesList({ textNodes, setTextNodes }) {
                               )
                             }
                           />
-                          <TextOptionsSelector
+                          <TextNodeOptionsSelector
                             index={index}
                             textNodes={textNodes}
                             setTextNodes={setTextNodes}
