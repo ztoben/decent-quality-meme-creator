@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { SketchPicker } from "react-color";
+import CustomSketchPicker from "./CustomSketchPicker";
 
 const colorPickerButtonStyle = {
   width: 25,
@@ -22,8 +22,6 @@ export default function ColorPickerButton({ selectedColor, setSelectedColor }) {
   const getPopOverStyle = () => {
     const boundingRect = buttonRef.current.getBoundingClientRect();
 
-    console.log(boundingRect);
-
     return {
       position: "absolute",
       zIndex: "2",
@@ -45,9 +43,10 @@ export default function ColorPickerButton({ selectedColor, setSelectedColor }) {
       {isColorPickerOpen && (
         <div css={getPopOverStyle()}>
           <div css={coverStyle} onClick={() => setIsColorPickerOpen(false)} />
-          <SketchPicker
+          <CustomSketchPicker
             color={selectedColor}
             onChange={({ rgb }) => setSelectedColor(rgb)}
+            onClose={() => setIsColorPickerOpen(false)}
           />
         </div>
       )}
