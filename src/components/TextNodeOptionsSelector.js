@@ -15,6 +15,7 @@ const strikethroughOption = ["textDecoration", "line-through"];
 const underlineOption = ["textDecoration", "underline"];
 
 const containerStyle = {
+  margin: "0 3px 3px 0",
   display: "flex",
   border: "1px solid lightgray",
   borderTop: "none",

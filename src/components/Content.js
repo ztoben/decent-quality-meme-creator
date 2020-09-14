@@ -9,9 +9,18 @@ import FontOptionsSelector from "./FontOptionsSelector";
 const defaultFontOptions = {
   fontFamily: "Impact",
   fontSize: 40,
-  fill: "white",
-  stroke: "black",
-  strokeWidth: 1,
+  fill: {
+    r: 255,
+    g: 255,
+    b: 255,
+    a: 1,
+  },
+  stroke: {
+    r: 0,
+    g: 0,
+    b: 0,
+    a: 1,
+  },
   align: "center",
 };
 

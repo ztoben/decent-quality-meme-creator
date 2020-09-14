@@ -7,6 +7,7 @@ import {
   FaMinus,
   FaPlus,
 } from "react-icons/fa";
+import ColorPickerButton from "./ColorPickerButton";
 
 const fontOptionsContainerStyle = {
   display: "flex",
@@ -24,12 +25,6 @@ const fontSizeInputStyle = {
   padding: 0,
   margin: 0,
 };
-const colorPickerButtonStyle = {
-  width: 25,
-  height: 25,
-  margin: 2,
-  cursor: "pointer",
-};
 
 // fontFamily: "Impact", "Arial", "Comic Sans"
 // fontSize: 40,
@@ -38,13 +33,13 @@ const colorPickerButtonStyle = {
 // strokeWidth: 1,
 // align: 'center'
 
-const FontButton = ({ fontFamily, setFontOptions, fontOptions }) => {
+const FontButton = ({ fontLabel, fontFamily, setFontOptions, fontOptions }) => {
   return (
     <IconButton
       onClick={() => setFontOptions({ ...fontOptions, fontFamily })}
       selected={fontOptions.fontFamily === fontFamily}
     >
-      {fontFamily}
+      {fontLabel}
     </IconButton>
   );
 };
@@ -100,30 +95,41 @@ export default function FontOptionsSelector({ fontOptions, setFontOptions }) {
           <FaPlus />
         </IconButton>
         <FontButton
+          fontLabel="Impact"
           fontFamily="Impact"
           fontOptions={fontOptions}
           setFontOptions={setFontOptions}
         />
         <FontButton
+          fontLabel="Arial"
           fontFamily="Arial"
           fontOptions={fontOptions}
           setFontOptions={setFontOptions}
         />
         <FontButton
-          fontFamily="Comic Sans"
+          fontLabel="Comic Sans"
+          fontFamily='"Comic Sans MS", "Comic Sans", cursive'
           fontOptions={fontOptions}
           setFontOptions={setFontOptions}
         />
       </div>
       <div css={fontOptionsInnerContainerStyle}>
-        <button
-          css={{ ...colorPickerButtonStyle, backgroundColor: fontOptions.fill }}
+        {/*<bu tton*/}
+        {/*  css={{ ...colorPickerButtonStyle, backgroundColor: fontOptions.fill }}*/}
+        {/*/>*/}
+        {/*<button*/}
+        {/*  css={{*/}
+        {/*    ...colorPickerButtonStyle,*/}
+        {/*    backgroundColor: fontOptions.stroke,*/}
+        {/*  }}*/}
+        {/*/>*/}
+        <ColorPickerButton
+          selectedColor={fontOptions.fill}
+          setSelectedColor={(color) => setFontOption("fill", color)}
         />
-        <button
-          css={{
-            ...colorPickerButtonStyle,
-            backgroundColor: fontOptions.stroke,
-          }}
+        <ColorPickerButton
+          selectedColor={fontOptions.stroke}
+          setSelectedColor={(color) => setFontOption("stroke", color)}
         />
         <IconButton
           selected={fontOptions.align === "left"}

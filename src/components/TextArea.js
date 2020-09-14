@@ -11,10 +11,11 @@ function onChangeSetTextNodes(setTextNodes, textNodes, value, index) {
 }
 
 const textAreaStyle = {
+  fontFamily: "inherit",
+  fontSize: 14,
   margin: "3px 3px 3px 0",
   flexGrow: 1,
   padding: 5,
-  fontSize: 14,
   resize: "none",
   "&:focus": {
     outline: "none",

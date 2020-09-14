@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Layer, Stage, Text } from "react-konva";
 import BaseImage from "./BaseImage";
-import { handleSaveImage } from "../helpers";
+import { handleSaveImage, RGBAToHexA } from "../helpers";
 
 const heightWidthContainerStyle = {
   display: "flex",
@@ -92,6 +92,8 @@ export default function Canvas({
               <Text
                 {...textNode}
                 {...fontOptions}
+                fill={RGBAToHexA(fontOptions.fill)}
+                stroke={RGBAToHexA(fontOptions.stroke)}
                 y={index * 20}
                 width={width}
               />

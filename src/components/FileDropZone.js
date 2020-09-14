@@ -4,6 +4,7 @@ import { generateID } from "../helpers";
 import ImageNodesList from "./ImageNodesList";
 
 const baseStyle = {
+  fontSize: 14,
   padding: "20px",
   borderWidth: 2,
   borderRadius: 2,
@@ -11,7 +12,6 @@ const baseStyle = {
   borderStyle: "dashed",
   backgroundColor: "#fafafa",
   color: "#bdbdbd",
-  outline: "none",
   transition: "border .24s ease-in-out",
   textAlign: "center",
   cursor: "pointer",
@@ -74,14 +74,14 @@ export default function FileDropZone({ imageNodes, setImageNodes }) {
 
   return (
     <>
-      <div {...getRootProps({ style })}>
+      <button {...getRootProps({ style })}>
         <input {...getInputProps()} />
         {isDragActive ? (
           <p>Drop the files here ...</p>
         ) : (
           <p>Drag 'n' drop some files here, or click to select files</p>
         )}
-      </div>
+      </button>
       <ImageNodesList imageNodes={imageNodes} setImageNodes={setImageNodes} />
     </>
   );

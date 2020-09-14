@@ -16,6 +16,7 @@
     "react-app-rewired": "2.1.6",
     "react-base64-downloader": "2.1.6",
     "react-beautiful-dnd": "13.0.0",
+    "react-color": "2.18.1",
     "react-dom": "^16.13.1",
     "react-dropzone": "11.0.3",
     "react-icons": "3.11.0",
