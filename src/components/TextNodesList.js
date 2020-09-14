@@ -1,16 +1,7 @@
 import React from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { createEmptyTextNode, onDragEnd } from "../helpers";
-import TextNodeOptionsSelector from "./TextNodeOptionsSelector";
-import DragHandle from "./DragHandle";
-
-function onChangeSetTextNodes(setTextNodes, textNodes, value, index) {
-  const newTextNodes = [...textNodes];
-
-  newTextNodes[index].text = value;
-
-  setTextNodes(newTextNodes);
-}
+import TextArea from "./TextArea";
 
 const grid = 8;
 
@@ -41,48 +32,29 @@ export default function TextNodesList({ textNodes, setTextNodes }) {
                   draggableId={textNode.id}
                   index={index}
                 >
-                  {(provided, snapshot) => (
-                    <div>
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.dragHandleProps}
-                        {...provided.draggableProps}
-                        css={getItemStyle(
-                          provided.draggableProps.style,
-                          snapshot.isDragging
-                        )}
-                      >
-                        <DragHandle />
+                  {(provided, snapshot) => {
+                    return (
+                      <div>
                         <div
-                          css={{
-                            display: "flex",
-                            flexDirection: "column",
-                            flex: 1,
-                          }}
+                          ref={provided.innerRef}
+                          {...provided.dragHandleProps}
+                          {...provided.draggableProps}
+                          css={getItemStyle(
+                            provided.draggableProps.style,
+                            snapshot.isDragging
+                          )}
                         >
-                          <input
-                            css={{ flexGrow: 1, padding: 5, fontSize: 14 }}
-                            type="text"
-                            value={textNode?.text}
-                            onChange={(event) =>
-                              onChangeSetTextNodes(
-                                setTextNodes,
-                                textNodes,
-                                event.target.value,
-                                index
-                              )
-                            }
-                          />
-                          <TextNodeOptionsSelector
-                            index={index}
-                            textNodes={textNodes}
+                          <TextArea
+                            textNode={textNode}
                             setTextNodes={setTextNodes}
+                            textNodes={textNodes}
+                            index={index}
                           />
                         </div>
+                        {provided.placeholder}
                       </div>
-                      {provided.placeholder}
-                    </div>
-                  )}
+                    );
+                  }}
                 </Draggable>
               ))}
               {provided.placeholder}

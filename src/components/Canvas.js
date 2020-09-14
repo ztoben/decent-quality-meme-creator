@@ -33,7 +33,7 @@ export default function Canvas({
         <div>
           <span>Height:</span>
           <input
-            type="text"
+            type="number"
             value={height}
             onFocus={(e) => e.target.select()}
             onChange={(e) => setHeight(e.target.value.replace(/\D/, ""))}
@@ -42,7 +42,7 @@ export default function Canvas({
         <div>
           <span>Width:</span>
           <input
-            type="text"
+            type="number"
             value={width}
             onFocus={(e) => e.target.select()}
             onChange={(e) => setWidth(e.target.value.replace(/\D/, ""))}

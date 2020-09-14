@@ -17,9 +17,7 @@ export function createEmptyTextNode() {
   };
 }
 
-export const getInitialTextNodes = () => [
-  { ...createEmptyTextNode(), text: "Your text goes here" },
-];
+export const getInitialTextNodes = () => [{ ...createEmptyTextNode() }];
 
 export const handleSaveImage = (canvasRef, downloadName) => {
   const dataURL = canvasRef.current.toDataURL({

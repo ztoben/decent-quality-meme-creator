@@ -51,7 +51,7 @@ export default function TextNodeOptionsSelector({
       options.push(value);
     }
 
-    newTextNodes[index][option] = options.join(" ");
+    newTextNodes[index][option] = options.join(" ").trim();
     setTextNodes(newTextNodes);
   };
   const isSelected = (option, value) => {

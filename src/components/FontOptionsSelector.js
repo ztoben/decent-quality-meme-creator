@@ -4,15 +4,12 @@ import {
   FaAlignCenter,
   FaAlignLeft,
   FaAlignRight,
-  FaFill,
   FaMinus,
   FaPlus,
-  FaBorderStyle,
 } from "react-icons/fa";
 
 const fontOptionsContainerStyle = {
   display: "flex",
-  flex: 1,
   justifyContent: "space-between",
   marginBottom: 5,
 };
@@ -26,6 +23,12 @@ const fontSizeInputStyle = {
   textAlign: "center",
   padding: 0,
   margin: 0,
+};
+const colorPickerButtonStyle = {
+  width: 25,
+  height: 25,
+  margin: 2,
+  cursor: "pointer",
 };
 
 // fontFamily: "Impact", "Arial", "Comic Sans"
@@ -113,12 +116,15 @@ export default function FontOptionsSelector({ fontOptions, setFontOptions }) {
         />
       </div>
       <div css={fontOptionsInnerContainerStyle}>
-        <IconButton>
-          <FaFill />
-        </IconButton>
-        <IconButton>
-          <FaBorderStyle />
-        </IconButton>
+        <button
+          css={{ ...colorPickerButtonStyle, backgroundColor: fontOptions.fill }}
+        />
+        <button
+          css={{
+            ...colorPickerButtonStyle,
+            backgroundColor: fontOptions.stroke,
+          }}
+        />
         <IconButton
           selected={fontOptions.align === "left"}
           onClick={() => setFontOption("align", "left")}
