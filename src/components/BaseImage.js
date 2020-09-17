@@ -6,6 +6,7 @@ export default function BaseImage({
   draggable,
   isSelected,
   onSelect,
+  onUnSelect,
   onChange,
 }) {
   const { src, x, y, width, height } = imageProps;
@@ -55,8 +56,8 @@ export default function BaseImage({
         height={height}
         image={image}
         draggable={draggable}
-        onClick={onSelect}
-        onTap={onSelect}
+        onClick={() => (!isSelected ? onSelect() : onUnSelect())}
+        onTap={() => (!isSelected ? onSelect() : onUnSelect())}
         onDragEnd={(e) => {
           onChange({
             ...imageProps,

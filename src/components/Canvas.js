@@ -1,7 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Layer, Stage, Text } from "react-konva";
 import BaseImage from "./BaseImage";
-import { handleSaveImage, RGBAToHexA } from "../helpers";
+import { getImageDimensions, handleSaveImage, RGBAToHexA } from "../helpers";
 
 const heightWidthContainerStyle = {
   display: "flex",
@@ -19,6 +19,25 @@ export default function Canvas({
   const [width, setWidth] = useState(500);
   const [height, setHeight] = useState(500);
   const stageRef = useRef();
+
+  useEffect(() => {
+    async function setWidthAndHeight() {
+      let maxWidth = 0;
+      let maxHeight = 0;
+
+      for await (let imageNode of imageNodes) {
+        const { w: tempW, h: tempH } = await getImageDimensions(imageNode.src);
+
+        if (tempW > maxWidth) maxWidth = tempW;
+        if (tempH > maxHeight) maxHeight = tempH;
+      }
+
+      setWidth(maxWidth);
+      setHeight(maxHeight);
+    }
+
+    setWidthAndHeight();
+  }, [imageNodes]);
 
   const checkDeselect = (e) => {
     const clickedOnEmpty = e.target === e.target.getStage();
@@ -56,6 +75,7 @@ export default function Canvas({
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          alignSelf: "center",
           width,
           height,
         }}
@@ -75,9 +95,8 @@ export default function Canvas({
                   draggable={true}
                   src={imageNode.src}
                   isSelected={imageNode.id === selectedId}
-                  onSelect={() => {
-                    selectShape(imageNode.id);
-                  }}
+                  onSelect={() => selectShape(imageNode.id)}
+                  onUnSelect={() => selectShape(null)}
                   onChange={(newAttrs) => {
                     const newImageNodes = imageNodes.slice();
                     newImageNodes[index] = newAttrs;

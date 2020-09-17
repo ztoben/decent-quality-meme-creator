@@ -62,3 +62,15 @@ export function RGBAToHexA({ r, g, b, a }) {
 
   return "#" + r + g + b + a;
 }
+
+export function getImageDimensions(file) {
+  return new Promise(function (resolve) {
+    let i = new Image();
+
+    i.onload = function () {
+      return resolve({ w: i.width, h: i.height });
+    };
+
+    i.src = file;
+  });
+}
