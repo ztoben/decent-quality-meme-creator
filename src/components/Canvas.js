@@ -1,7 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Layer, Stage, Text } from "react-konva";
-import BaseImage from "./BaseImage";
-import { getImageDimensions, handleSaveImage, RGBAToHexA } from "../helpers";
+import React, { useRef, useState } from "react";
+import { Layer, Stage } from "react-konva";
+import { FaExpand } from "react-icons/fa";
+import { getImageDimensions, handleSaveImage } from "../helpers";
+import CanvasImage from "./CanvasImage";
+import CanvasText from "./CanvasText";
+import IconButton from "./IconButton";
 
 const heightWidthContainerStyle = {
   display: "flex",
@@ -13,6 +16,7 @@ export default function Canvas({
   imageNodes,
   setImageNodes,
   textNodes,
+  setTextNodes,
   fontOptions,
 }) {
   const [selectedId, selectShape] = useState(null);
@@ -20,24 +24,20 @@ export default function Canvas({
   const [height, setHeight] = useState(500);
   const stageRef = useRef();
 
-  useEffect(() => {
-    async function setWidthAndHeight() {
-      let maxWidth = 0;
-      let maxHeight = 0;
+  const matchCanvasSizeToImages = async () => {
+    let maxWidth = 0;
+    let maxHeight = 0;
 
-      for await (let imageNode of imageNodes) {
-        const { w: tempW, h: tempH } = await getImageDimensions(imageNode.src);
+    for await (let imageNode of imageNodes) {
+      const { w: tempW, h: tempH } = await getImageDimensions(imageNode.src);
 
-        if (tempW > maxWidth) maxWidth = tempW;
-        if (tempH > maxHeight) maxHeight = tempH;
-      }
-
-      setWidth(maxWidth);
-      setHeight(maxHeight);
+      if (tempW > maxWidth) maxWidth = tempW;
+      if (tempH > maxHeight) maxHeight = tempH;
     }
 
-    setWidthAndHeight();
-  }, [imageNodes]);
+    setWidth(maxWidth);
+    setHeight(maxHeight);
+  };
 
   const checkDeselect = (e) => {
     const clickedOnEmpty = e.target === e.target.getStage();
@@ -52,6 +52,7 @@ export default function Canvas({
         <div>
           <span>Height:</span>
           <input
+            css={{ height: 21 }}
             type="number"
             value={height}
             onFocus={(e) => e.target.select()}
@@ -61,12 +62,16 @@ export default function Canvas({
         <div>
           <span>Width:</span>
           <input
+            css={{ height: 21 }}
             type="number"
             value={width}
             onFocus={(e) => e.target.select()}
             onChange={(e) => setWidth(e.target.value.replace(/\D/, ""))}
           />
         </div>
+        <IconButton onClick={() => matchCanvasSizeToImages()}>
+          <FaExpand />
+        </IconButton>
       </div>
       <div
         css={{
@@ -90,7 +95,7 @@ export default function Canvas({
           {imageNodes.map((imageNode, index) => {
             return (
               <Layer key={`image-${index}`}>
-                <BaseImage
+                <CanvasImage
                   imageProps={imageNode}
                   draggable={true}
                   src={imageNode.src}
@@ -108,13 +113,17 @@ export default function Canvas({
           })}
           {textNodes.map((textNode, index) => (
             <Layer key={`text-${index}`}>
-              <Text
-                {...textNode}
-                {...fontOptions}
-                fill={RGBAToHexA(fontOptions.fill)}
-                stroke={RGBAToHexA(fontOptions.stroke)}
-                y={index * 20}
-                width={width}
+              <CanvasText
+                textProps={textNode}
+                fontOptions={fontOptions}
+                isSelected={textNode.id === selectedId}
+                onSelect={() => selectShape(textNode.id)}
+                onUnSelect={() => selectShape(null)}
+                onChange={(newAttrs) => {
+                  const newTextNodes = textNodes.slice();
+                  newTextNodes[index] = newAttrs;
+                  setTextNodes(newTextNodes);
+                }}
               />
             </Layer>
           ))}

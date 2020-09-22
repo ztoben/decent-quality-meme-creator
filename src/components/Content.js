@@ -42,6 +42,7 @@ export default function Content() {
       <p>Meme:</p>
       <Canvas
         textNodes={textNodes}
+        setTextNodes={setTextNodes}
         fontOptions={fontOptions}
         imageNodes={imageNodes}
         setImageNodes={setImageNodes}

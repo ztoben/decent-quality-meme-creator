@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Image, Transformer } from "react-konva";
 
-export default function BaseImage({
+export default function CanvasImage({
   imageProps,
   draggable,
   isSelected,
