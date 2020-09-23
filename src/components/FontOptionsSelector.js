@@ -29,6 +29,7 @@ const fontSizeInputStyle = {
 const FontButton = ({ fontLabel, fontFamily, setFontOptions, fontOptions }) => {
   return (
     <IconButton
+      style={{ fontFamily, height: 25 }}
       onClick={() => setFontOptions({ ...fontOptions, fontFamily })}
       selected={fontOptions.fontFamily === fontFamily}
     >
@@ -107,20 +108,13 @@ export default function FontOptionsSelector({ fontOptions, setFontOptions }) {
         />
       </div>
       <div css={fontOptionsInnerContainerStyle}>
-        {/*<bu tton*/}
-        {/*  css={{ ...colorPickerButtonStyle, backgroundColor: fontOptions.fill }}*/}
-        {/*/>*/}
-        {/*<button*/}
-        {/*  css={{*/}
-        {/*    ...colorPickerButtonStyle,*/}
-        {/*    backgroundColor: fontOptions.stroke,*/}
-        {/*  }}*/}
-        {/*/>*/}
         <ColorPickerButton
+          type="fill"
           selectedColor={fontOptions.fill}
           setSelectedColor={(color) => setFontOption("fill", color)}
         />
         <ColorPickerButton
+          type="stroke"
           selectedColor={fontOptions.stroke}
           setSelectedColor={(color) => setFontOption("stroke", color)}
         />
