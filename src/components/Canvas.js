@@ -1,15 +1,35 @@
 import React, { useRef, useState } from "react";
 import { Layer, Stage } from "react-konva";
-import { FaExpand } from "react-icons/fa";
-import { getImageDimensions, handleSaveImage } from "../helpers";
+import {
+  FaExpand,
+  FaRedo,
+  FaSave,
+  FaShare,
+  FaTrashAlt,
+  FaUndo,
+} from "@meronex/icons/fa";
+import { getImageDimensions, handleSaveImage, resetCanvas } from "../helpers";
 import CanvasImage from "./CanvasImage";
 import CanvasText from "./CanvasText";
 import IconButton from "./IconButton";
+import { buttonStyle } from "../styles";
+import { DEFAULT_CANVAS_SIZE } from "../constants";
 
-const heightWidthContainerStyle = {
+const canvasControlContainerStyle = {
   display: "flex",
   justifyContent: "space-around",
   marginBottom: 5,
+};
+const canvasControlStyle = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
+const canvasControlInputStyle = {
+  height: 18,
+};
+const canvasControlLabelStyle = {
+  fontSize: 12,
 };
 
 export default function Canvas({
@@ -20,8 +40,8 @@ export default function Canvas({
   fontOptions,
 }) {
   const [selectedId, selectShape] = useState(null);
-  const [width, setWidth] = useState(500);
-  const [height, setHeight] = useState(500);
+  const [width, setWidth] = useState(DEFAULT_CANVAS_SIZE);
+  const [height, setHeight] = useState(DEFAULT_CANVAS_SIZE);
   const stageRef = useRef();
 
   const matchCanvasSizeToImages = async () => {
@@ -30,9 +50,11 @@ export default function Canvas({
 
     for await (let imageNode of imageNodes) {
       const { w: tempW, h: tempH } = await getImageDimensions(imageNode.src);
+      const x = imageNode.x || 0;
+      const y = imageNode.y || 0;
 
-      if (tempW > maxWidth) maxWidth = tempW;
-      if (tempH > maxHeight) maxHeight = tempH;
+      if (tempW + x > maxWidth) maxWidth = tempW + x;
+      if (tempH + y > maxHeight) maxHeight = tempH + y;
     }
 
     setWidth(maxWidth);
@@ -48,35 +70,53 @@ export default function Canvas({
 
   return (
     <>
-      <div css={heightWidthContainerStyle}>
-        <div>
-          <span>Height:</span>
+      <div css={canvasControlContainerStyle}>
+        <div css={canvasControlStyle}>
+          <span css={canvasControlLabelStyle}>Height:</span>
           <input
-            css={{ height: 21 }}
-            type="number"
+            css={canvasControlInputStyle}
             value={height}
             onFocus={(e) => e.target.select()}
             onChange={(e) => setHeight(e.target.value.replace(/\D/, ""))}
           />
         </div>
-        <div>
-          <span>Width:</span>
+        <div css={canvasControlStyle}>
+          <span css={canvasControlLabelStyle}>Width:</span>
           <input
-            css={{ height: 21 }}
-            type="number"
+            css={canvasControlInputStyle}
             value={width}
             onFocus={(e) => e.target.select()}
             onChange={(e) => setWidth(e.target.value.replace(/\D/, ""))}
           />
         </div>
-        <IconButton onClick={() => matchCanvasSizeToImages()}>
-          <FaExpand />
-        </IconButton>
+        <div css={canvasControlStyle}>
+          <IconButton onClick={() => alert("Not yet implemented.")}>
+            <FaUndo />
+          </IconButton>
+          <IconButton onClick={() => alert("Not yet implemented.")}>
+            <FaRedo />
+          </IconButton>
+          <IconButton onClick={() => matchCanvasSizeToImages()}>
+            <FaExpand />
+          </IconButton>
+          <IconButton
+            onClick={() => {
+              if (
+                window.confirm("Are you sure you want to reset the canvas?")
+              ) {
+                resetCanvas(setTextNodes, setImageNodes, setWidth, setHeight);
+              }
+            }}
+          >
+            <FaTrashAlt />
+          </IconButton>
+        </div>
       </div>
       <div
         css={{
           position: "relative",
           border: "1px solid black",
+          backgroundColor: "white",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -131,11 +171,20 @@ export default function Canvas({
         </Stage>
       </div>
       <button
-        css={{ marginTop: 10 }}
+        css={{ ...buttonStyle, margin: "10px 0 0" }}
         type="button"
         onClick={() => handleSaveImage(stageRef)}
       >
+        <FaSave css={{ marginRight: 5 }} />
         Save
+      </button>
+      <button
+        css={{ ...buttonStyle, margin: "5px 0 0" }}
+        type="button"
+        onClick={() => alert("Not yet implemented.")}
+      >
+        <FaShare css={{ marginRight: 5 }} />
+        Share
       </button>
     </>
   );

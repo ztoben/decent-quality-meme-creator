@@ -2,6 +2,7 @@ import React from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { createEmptyTextNode, onDragEnd } from "../helpers";
 import TextArea from "./TextArea";
+import { buttonStyle } from "../styles";
 
 const grid = 8;
 
@@ -63,6 +64,7 @@ export default function TextNodesList({ textNodes, setTextNodes }) {
         </Droppable>
       </DragDropContext>
       <button
+        css={{ ...buttonStyle, margin: 0 }}
         type="button"
         onClick={() =>
           setTextNodes([...textNodes, { ...createEmptyTextNode() }])

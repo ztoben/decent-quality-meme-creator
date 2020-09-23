@@ -1,4 +1,5 @@
 import { triggerBase64Download } from "react-base64-downloader";
+import { DEFAULT_CANVAS_SIZE } from "./constants";
 
 export function generateID() {
   return (
@@ -18,6 +19,18 @@ export function createEmptyTextNode() {
 }
 
 export const getInitialTextNodes = () => [{ ...createEmptyTextNode() }];
+
+export const resetCanvas = (
+  setTextNodes,
+  setImageNodes,
+  setWidth,
+  setHeight
+) => {
+  setTextNodes(getInitialTextNodes());
+  setImageNodes([]);
+  setWidth(DEFAULT_CANVAS_SIZE);
+  setHeight(DEFAULT_CANVAS_SIZE);
+};
 
 export const handleSaveImage = (canvasRef, downloadName) => {
   const dataURL = canvasRef.current.toDataURL({

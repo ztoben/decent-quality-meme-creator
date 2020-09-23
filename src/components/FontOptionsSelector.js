@@ -6,7 +6,7 @@ import {
   FaAlignRight,
   FaMinus,
   FaPlus,
-} from "react-icons/fa";
+} from "@meronex/icons/fa";
 import ColorPickerButton from "./ColorPickerButton";
 
 const fontOptionsContainerStyle = {
@@ -25,13 +25,6 @@ const fontSizeInputStyle = {
   padding: 0,
   margin: 0,
 };
-
-// fontFamily: "Impact", "Arial", "Comic Sans"
-// fontSize: 40,
-// fill: "white",
-// stroke: "black",
-// strokeWidth: 1,
-// align: 'center'
 
 const FontButton = ({ fontLabel, fontFamily, setFontOptions, fontOptions }) => {
   return (

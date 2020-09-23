@@ -6,7 +6,7 @@ import {
   FaUnderline,
   FaLink,
   FaTrashAlt,
-} from "react-icons/fa";
+} from "@meronex/icons/fa";
 import IconButton from "./IconButton";
 
 const boldOption = ["fontStyle", "bold"];

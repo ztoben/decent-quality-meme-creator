@@ -1,25 +1,25 @@
 import React from "react";
+import { buttonStyle } from "../styles";
 
-const buttonStyle = {
-  display: "flex",
-  padding: 5,
-  justifyContent: "center",
-  margin: 2,
-  borderRadius: 0,
-  boxShadow: "none",
-  cursor: "pointer",
-};
-
-export default function IconButton({ children, onClick, selected }) {
+export default function IconButton({
+  children,
+  onClick,
+  selected,
+  style = {},
+}) {
   return (
     <button
       css={{
         ...buttonStyle,
+        ...style,
         ...(selected && {
           backgroundColor: "gray",
         }),
       }}
-      onClick={onClick}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick();
+      }}
     >
       {children}
     </button>

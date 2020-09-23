@@ -1,8 +1,9 @@
 import React from "react";
-import { FaTrashAlt } from "react-icons/fa";
+import { FaTrashAlt } from "@meronex/icons/fa";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { onDragEnd } from "../helpers";
 import DragHandle from "./DragHandle";
+import IconButton from "./IconButton";
 
 const imageNodeInfoContainerStyle = {
   display: "flex",
@@ -16,7 +17,7 @@ const imageNodeTextStyle = {
   borderStyle: "solid",
   backgroundColor: "#fafafa",
   color: "green",
-  padding: 5,
+  padding: 4,
   margin: 0,
   flex: 1,
 };
@@ -58,8 +59,8 @@ export default function ImageNodesList({ imageNodes, setImageNodes }) {
                     >
                       <DragHandle />
                       <p css={imageNodeTextStyle}>{imageNode.name}</p>
-                      <button
-                        css={{ cursor: "pointer" }}
+                      <IconButton
+                        style={{ margin: 0, width: 29 }}
                         onClick={() => {
                           const newImageNodes = [...imageNodes];
                           newImageNodes.splice(index, 1);
@@ -68,7 +69,7 @@ export default function ImageNodesList({ imageNodes, setImageNodes }) {
                         }}
                       >
                         <FaTrashAlt />
-                      </button>
+                      </IconButton>
                     </div>
                     {provided.placeholder}
                   </div>

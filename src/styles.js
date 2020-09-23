@@ -4,3 +4,14 @@ export const contentStyle = {
   flexDirection: "column",
   flex: 1,
 };
+
+export const buttonStyle = {
+  display: "flex",
+  padding: 5,
+  justifyContent: "center",
+  alignItems: "center",
+  margin: 2,
+  borderRadius: 0,
+  boxShadow: "none",
+  cursor: "pointer",
+};

@@ -8,7 +8,7 @@ import {
 } from "react-color/lib/components/common";
 import SketchFields from "react-color/lib/components/sketch/SketchFields";
 import SketchPresetColors from "react-color/lib/components/sketch/SketchPresetColors";
-import { FaTimes } from "react-icons/fa";
+import { FaTimes } from "@meronex/icons/fa";
 
 export const CustomSketchPicker = ({
   width,
