@@ -116,6 +116,7 @@ export default function Canvas({
               <CanvasText
                 textProps={textNode}
                 fontOptions={fontOptions}
+                width={width}
                 isSelected={textNode.id === selectedId}
                 onSelect={() => selectShape(textNode.id)}
                 onUnSelect={() => selectShape(null)}

@@ -9,6 +9,7 @@ export default function CanvasText({
   onSelect,
   onUnSelect,
   onChange,
+  width,
 }) {
   const transformerRef = useRef();
   const textContainerRef = useRef();
@@ -24,6 +25,7 @@ export default function CanvasText({
     <>
       <Text
         ref={textContainerRef}
+        width={width}
         {...textProps}
         {...fontOptions}
         fill={RGBAToHexA(fontOptions.fill)}
@@ -37,8 +39,30 @@ export default function CanvasText({
             y: e.target.y(),
           });
         }}
+        onTransform={(e) => {
+          const node = textContainerRef.current;
+          const anchorName = node.getStage()?.findOne("Transformer")
+            ._movingAnchorName;
+          const changingWidth =
+            anchorName === "middle-left" || anchorName === "middle-right";
+          const changingHeight =
+            anchorName === "top-center" || anchorName === "bottom-center";
+
+          if (changingWidth) {
+            const scale = node.scaleX();
+            node.width(Math.max(node.width() * scale, node.fontSize()));
+            node.scaleX(1);
+          }
+
+          if (changingHeight) {
+            const scale = node.scaleY();
+            node.height(Math.max(node.height() * scale, node.fontSize()));
+            node.scaleY(1);
+          }
+        }}
         onTransformEnd={(e) => {
           const node = textContainerRef.current;
+          const scale = node.scaleX();
           const scaleX = node.scaleX();
           const scaleY = node.scaleY();
 
@@ -48,10 +72,9 @@ export default function CanvasText({
           const width = Math.max(5, node.width() * scaleX);
           const height = Math.max(node.height() * scaleY);
 
-          console.log(node);
-
           onChange({
             ...textProps,
+            fontSize: node.fontSize() * scale,
             x: node.x(),
             y: node.y(),
             width,
@@ -61,6 +84,12 @@ export default function CanvasText({
       />
       {isSelected && (
         <Transformer
+          enabledAnchors={[
+            "middle-left",
+            "middle-right",
+            "top-center",
+            "bottom-center",
+          ]}
           ref={transformerRef}
           boundBoxFunc={(oldBox, newBox) => {
             if (newBox.width < 5 || newBox.height < 5) {
