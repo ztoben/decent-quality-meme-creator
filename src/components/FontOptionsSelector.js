@@ -8,6 +8,7 @@ import {
   FaPlus,
 } from "@meronex/icons/fa";
 import ColorPickerButton from "./ColorPickerButton";
+import FontSelect from "./FontSelect";
 
 const fontOptionsContainerStyle = {
   display: "flex",
@@ -24,18 +25,6 @@ const fontSizeInputStyle = {
   textAlign: "center",
   padding: 0,
   margin: 0,
-};
-
-const FontButton = ({ fontLabel, fontFamily, setFontOptions, fontOptions }) => {
-  return (
-    <IconButton
-      style={{ fontFamily, height: 25 }}
-      onClick={() => setFontOptions({ ...fontOptions, fontFamily })}
-      selected={fontOptions.fontFamily === fontFamily}
-    >
-      {fontLabel}
-    </IconButton>
-  );
 };
 
 export default function FontOptionsSelector({ fontOptions, setFontOptions }) {
@@ -88,24 +77,7 @@ export default function FontOptionsSelector({ fontOptions, setFontOptions }) {
         >
           <FaPlus />
         </IconButton>
-        <FontButton
-          fontLabel="Impact"
-          fontFamily="Impact"
-          fontOptions={fontOptions}
-          setFontOptions={setFontOptions}
-        />
-        <FontButton
-          fontLabel="Arial"
-          fontFamily="Arial"
-          fontOptions={fontOptions}
-          setFontOptions={setFontOptions}
-        />
-        <FontButton
-          fontLabel="Comic Sans"
-          fontFamily='"Comic Sans MS", "Comic Sans", cursive'
-          fontOptions={fontOptions}
-          setFontOptions={setFontOptions}
-        />
+        <FontSelect fontOptions={fontOptions} setFontOptions={setFontOptions} />
       </div>
       <div css={fontOptionsInnerContainerStyle}>
         <ColorPickerButton

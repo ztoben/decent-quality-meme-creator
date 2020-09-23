@@ -16,7 +16,11 @@ const coverStyle = {
   left: "0px",
 };
 
-function determineColor({ r, g, b }) {
+function getBackgroundColor(selectedColor) {
+  return `rgba(${selectedColor.r}, ${selectedColor.g}, ${selectedColor.b}, ${selectedColor.a})`;
+}
+
+function getColor({ r, g, b }) {
   if (r * 0.299 + g * 0.587 + b * 0.114 > 186) return "#000000";
 
   return "#ffffff";
@@ -47,8 +51,8 @@ export default function ColorPickerButton({
         ref={buttonRef}
         css={{
           ...colorPickerButtonStyle,
-          backgroundColor: `rgba(${selectedColor.r}, ${selectedColor.g}, ${selectedColor.b}, ${selectedColor.a})`,
-          color: determineColor(selectedColor),
+          backgroundColor: getBackgroundColor(selectedColor),
+          color: getColor(selectedColor),
         }}
         onClick={() => setIsColorPickerOpen(true)}
       >
